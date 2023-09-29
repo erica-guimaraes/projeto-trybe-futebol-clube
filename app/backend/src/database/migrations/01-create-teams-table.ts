@@ -1,18 +1,23 @@
 import { DataTypes, Model, QueryInterface } from 'sequelize';
-import IExample from '../../Interfaces/ITeams';
+import ITeams from '../../Interfaces/ITeams';
 
 export default {
   up(queryInterface: QueryInterface) {
-    return queryInterface.createTable<Model<IExample>>('trybe_eval', {
+    return queryInterface.createTable<Model<ITeams>>('teams', {
       id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
       },
+      teamName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        field: 'team_name', 
+      },
     });
   },
   down(queryInterface: QueryInterface) {
-    return queryInterface.dropTable('trybe_eval');
-  },
-};
+    return queryInterface.dropTable('teams');
+  }
+}
