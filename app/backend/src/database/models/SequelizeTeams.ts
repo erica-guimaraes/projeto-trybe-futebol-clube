@@ -7,14 +7,14 @@ import {
 } from 'sequelize';
 import db from '.';
 
-class Team extends Model<InferAttributes<Team>,
-InferCreationAttributes<Team>> {
+class SequelizeTeams extends Model<InferAttributes<SequelizeTeams>,
+InferCreationAttributes<SequelizeTeams>> {
   declare id: CreationOptional<number>;
 
   declare teamName: string;
 }
 
-Team.init({
+SequelizeTeams.init({
   id: {
     type: DataTypes.INTEGER,
     allowNull: false,
@@ -27,9 +27,9 @@ Team.init({
   },
 }, {
   sequelize: db,
-  modelName: 'teams',
+  tableName: 'teams',
   timestamps: false,
   underscored: true, // tem a mesma função do snakeze
 });
 
-export default Team;
+export default SequelizeTeams;
