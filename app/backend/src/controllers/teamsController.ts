@@ -9,7 +9,7 @@ export default class TeamsController {
     this.teamsService = new TeamsService();
   }
 
-  async getAllTeams(req: Request, res: Response) {
+  async getAllTeams(_req: Request, res: Response) {
     const { status, data } = await this.teamsService.getAllTeams();
 
     return res.status(mapStatusHTTP(status)).json(data);
