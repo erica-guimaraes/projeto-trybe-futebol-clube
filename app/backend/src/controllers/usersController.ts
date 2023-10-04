@@ -15,4 +15,11 @@ export default class UsersController {
 
     return res.status(mapStatusHTTP(status)).json(data);
   }
+
+  async userRole(_req: Request, res: Response) {
+    const { email } = res.locals.user;
+    const { status, data } = await this.usersService.userRole(email);
+
+    return res.status(mapStatusHTTP(status)).json(data);
+  }
 }

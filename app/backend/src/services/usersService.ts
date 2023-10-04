@@ -15,19 +15,28 @@ export default class UsersService {
 
   async loginUser(email: IUser['email'], password: IUser['password']):
   Promise<ServiceResponse<IToken>> {
-    const user = await this.usersModel.findByEmail(email);
+    const emailValid = await this.usersModel.findByEmail(email);
 
-    if (!user) {
+    if (!emailValid) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
-    const passwordValid = await bcrypt.compare(password, user.password);
+    const passwordValid = await bcrypt.compare(password, emailValid.password);
 
     if (!passwordValid) {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
-    const token = JWT.sign({ id: user.id, email: user.email });
+    const token = JWT.sign({ id: emailValid.id, email: emailValid.email });
     return { status: 'SUCCESSFUL', data: { token } };
+  }
+
+  async userRole(email: IUser['email']): Promise<ServiceResponse<{ role: string }>> {
+    const user = await this.usersModel.findByEmail(email);
+    if (!user) {
+      return { status: 'UNAUTHORIZED', data: { message: 'Invalid user' } };
+    }
+
+    return { status: 'SUCCESSFUL', data: { role: user?.role } };
   }
 }
