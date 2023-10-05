@@ -27,7 +27,7 @@ export default class UsersService {
       return { status: 'UNAUTHORIZED', data: { message: 'Invalid email or password' } };
     }
 
-    const token = JWT.sign({ id: emailValid.id, email: emailValid.email });
+    const token = JWT.create({ id: emailValid.id, email: emailValid.email });
     return { status: 'SUCCESSFUL', data: { token } };
   }
 

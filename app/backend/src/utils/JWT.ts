@@ -1,22 +1,21 @@
-import { JwtPayload, Secret, sign, SignOptions, verify } from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
-export default class JWT {
-  private static secret: Secret = process.env.JWT_SECRET || 'secrect';
+export type TokenPayload = {
+  id: number,
+  email: string,
+};
 
-  private static jwtConfig: SignOptions = {
-    expiresIn: '10d',
-    algorithm: 'HS256',
-  };
+const secret = process.env.JWT_SECRET || 'jwt_secret';
 
-  static sign(payload: JwtPayload): string {
-    return sign({ ...payload }, this.secret, this.jwtConfig);
+export default class TokenJwt {
+  static create(payload: TokenPayload): string {
+    const token = jwt.sign(payload, secret);
+    return token;
   }
 
-  static verify(token: string): JwtPayload | null {
-    try {
-      return verify(token, this.secret) as JwtPayload;
-    } catch (error) {
-      return null;
-    }
+  static verify(authorization: string): TokenPayload {
+    const token = authorization.split(' ')[1];
+    const decoded = jwt.verify(token, secret) as TokenPayload;
+    return decoded;
   }
 }

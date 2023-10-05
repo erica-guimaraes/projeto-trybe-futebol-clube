@@ -8,13 +8,12 @@ export default class ValidateToken {
     if (!authorization) {
       return res.status(401).json({ message: 'Token not found' });
     }
-
-    const validToken = JWT.verify(authorization);
-
-    if (!validToken) {
+    try {
+      const validToken = JWT.verify(authorization);
+      res.locals.user = validToken;
+    } catch (err) {
       return res.status(401).json({ message: 'Token must be a valid token' });
     }
-    res.locals.user = validToken;
     next();
   }
 }
