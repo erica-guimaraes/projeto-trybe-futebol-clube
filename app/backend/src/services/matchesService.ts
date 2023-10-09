@@ -23,4 +23,9 @@ export default class MatchesService {
     }
     return { status: 'SUCCESSFUL', data: finishedMatches };
   }
+
+  async getByIdMatches(id: number): Promise<ServiceResponse<{ message: string }>> {
+    await this.matchesModel.findById(id);
+    return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+  }
 }

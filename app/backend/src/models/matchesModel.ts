@@ -67,4 +67,12 @@ export default class MatchesModel implements IMatchesModel {
     );
     return dbMatches;
   }
+
+  async findById(id: IMatches['id']): Promise<IMatches | null> {
+    const dbMatches = await this.model.findByPk(id);
+    if (!dbMatches) return null;
+    dbMatches.inProgress = false;
+    await dbMatches.save();
+    return dbMatches;
+  }
 }
