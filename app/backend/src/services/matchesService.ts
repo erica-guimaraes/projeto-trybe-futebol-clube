@@ -24,8 +24,14 @@ export default class MatchesService {
     return { status: 'SUCCESSFUL', data: finishedMatches };
   }
 
-  async getByIdMatches(id: number): Promise<ServiceResponse<{ message: string }>> {
+  async getByIdMatches(id: IMatches['id']): Promise<ServiceResponse<{ message: string }>> {
     await this.matchesModel.findById(id);
     return { status: 'SUCCESSFUL', data: { message: 'Finished' } };
+  }
+
+  async updateMatches(id: IMatches['id'], homeTeamGoals: number, awayTeamGoals: number):
+  Promise<ServiceResponse<{ message: string }>> {
+    await this.matchesModel.updateMatches(id, homeTeamGoals, awayTeamGoals);
+    return { status: 'SUCCESSFUL', data: { message: 'Updated matches' } };
   }
 }

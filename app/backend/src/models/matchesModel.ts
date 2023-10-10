@@ -75,4 +75,13 @@ export default class MatchesModel implements IMatchesModel {
     await dbMatches.save();
     return dbMatches;
   }
+
+  async updateMatches(id: IMatches['id'], homeTeamGoals: number, awayTeamGoals: number) {
+    const match = await this.model.findByPk(id);
+    if (!match) return null;
+    match.homeTeamGoals = homeTeamGoals;
+    match.awayTeamGoals = awayTeamGoals;
+    await match.save();
+    return match;
+  }
 }
