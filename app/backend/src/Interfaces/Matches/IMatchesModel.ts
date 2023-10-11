@@ -1,4 +1,4 @@
-import { IMatches } from './IMatches';
+import { ICreateMatche, IMatches } from './IMatches';
 
 export interface IMatchesModel {
   findAll(): Promise<IMatches[]>,
@@ -7,4 +7,5 @@ export interface IMatchesModel {
   findById(id: IMatches['id']): Promise<IMatches | null>
   updateMatches(id: IMatches['id'],
     homeTeamGoals: number, awayTeamGoals: number): Promise<IMatches | null>
+  createMatche(infoMatch: ICreateMatche): Promise<IMatches>
 }

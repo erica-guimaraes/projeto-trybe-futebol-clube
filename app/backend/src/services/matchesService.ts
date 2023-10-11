@@ -1,4 +1,4 @@
-import { IMatches } from '../Interfaces/Matches/IMatches';
+import { ICreateMatche, IMatches } from '../Interfaces/Matches/IMatches';
 import { IMatchesModel } from '../Interfaces/Matches/IMatchesModel';
 import { ServiceResponse } from '../Interfaces/ServiceResponse';
 import MatchesModel from '../models/matchesModel';
@@ -33,5 +33,10 @@ export default class MatchesService {
   Promise<ServiceResponse<{ message: string }>> {
     await this.matchesModel.updateMatches(id, homeTeamGoals, awayTeamGoals);
     return { status: 'SUCCESSFUL', data: { message: 'Updated matches' } };
+  }
+
+  async createMatche(infoMatch: ICreateMatche): Promise<ServiceResponse<IMatches>> {
+    const newMatch = await this.matchesModel.createMatche(infoMatch);
+    return { status: 'CREATED', data: newMatch };
   }
 }

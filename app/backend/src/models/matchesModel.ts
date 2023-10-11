@@ -1,4 +1,4 @@
-import { IMatches } from '../Interfaces/Matches/IMatches';
+import { ICreateMatche, IMatches } from '../Interfaces/Matches/IMatches';
 import { IMatchesModel } from '../Interfaces/Matches/IMatchesModel';
 import SequelizeMatches from '../database/models/SequelizeMatches';
 import SequelizeTeams from '../database/models/SequelizeTeams';
@@ -83,5 +83,10 @@ export default class MatchesModel implements IMatchesModel {
     match.awayTeamGoals = awayTeamGoals;
     await match.save();
     return match;
+  }
+
+  async createMatche(infoMatch: ICreateMatche): Promise<IMatches> {
+    const newMatch = await this.model.create({ ...infoMatch, inProgress: true });
+    return newMatch;
   }
 }
