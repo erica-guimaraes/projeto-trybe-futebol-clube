@@ -13,3 +13,9 @@ export interface ICreateMatche {
   homeTeamGoals: number,
   awayTeamGoals: number,
 }
+
+export interface ITeamsWithMatches {
+  id: number;
+  teamName: string;
+  homeTeam?: IMatches[];
+}
